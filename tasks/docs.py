@@ -10,12 +10,7 @@ from .utils import create_file, get_git_email, get_git_user, get_latest_commit_h
 
 def insert_verbosity_flag(command, verbosity):
     # One level is no tox flag
-    if verbosity:
-        verbosity -= 1
-    # By default hide deps stage and success text
-    else:
-        verbosity -= 2
-
+    verbosity -= 1 if verbosity else 2
     if verbosity < 0:
         command.insert(1, f"-{'q' * abs(verbosity)}")
     elif verbosity > 0:
@@ -51,6 +46,6 @@ def serve(ctx, no_open=False, verbose=False):
     insert_verbosity_flag(command, verbose)
 
     if not no_open:
-        webbrowser.open_new_tab(f'http://localhost:8765')
+        webbrowser.open_new_tab('http://localhost:8765')
 
     ctx.run(' '.join(command))
