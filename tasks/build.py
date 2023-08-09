@@ -10,11 +10,7 @@ from .utils import EnvVars, get_version
     default=True,
 )
 def build(ctx, release=False):
-    if release:
-        global_ldflags = '-s -w'
-    else:
-        global_ldflags = ''
-
+    global_ldflags = '-s -w' if release else ''
     with EnvVars({'CGO_ENABLED': '0', 'GOOS': 'linux', 'GOARCH': 'amd64'}):
         ctx.run(
             f'go build '
